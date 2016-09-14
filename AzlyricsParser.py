@@ -39,13 +39,11 @@ class AzlyricsParser (object):
 		self.url = None
 
 	def search (self, callback, *data):
-		#artist = urllib.parse.quote_plus(self.artist)
 		artist = self.artist.replace(" ","")
-		#title = urllib.parse.quote_plus(self.title)
-		title = self.title.replace(" ","")
+		title = self.title.replace(" ","").replace("'","")
 
 		self.url = 'http://www.azlyrics.com/lyrics/%s/%s.html' % (artist, title)
-
+		syslog.syslog("search()::url: "+ self.url)
 		loader = rb.Loader()
 		loader.get_url (self.url, self.got_results, callback, *data)
 
@@ -63,6 +61,7 @@ class AzlyricsParser (object):
 			return
 
 		loader = rb.Loader()
+		syslog.syslog("got_results()::url: "+ self.url)
 		loader.get_url (self.url, self.parse_lyrics, callback, *data)
 
 	def parse_lyrics (self, result, callback, *data):
