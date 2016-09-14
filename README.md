@@ -1,0 +1,1 @@
+# rhithmbox-lyrics-plugin
